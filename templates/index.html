@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Auto Subtitle Generator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="header">
+        <span class="highlight">Hey! I am Aditya, I hope you find this tool helpful.</span>
+    </div>
+    <div class="container">
+        <div class="left">
+            <div class="heading">
+                <span class="highlight"><span class="green-text">AI</span>-Powered Auto Subtitle Generator</span>
+            </div>
+            <div class="heading-support">
+                <span class="highlight">It's automatic, online & free!</span>
+            </div>
+            <!-- Upload button -->
+            <div class="heading-action">
+                <form id="uploadForm1" action="/upload" method="post" enctype="multipart/form-data">
+                    <input type="file" id="videoFile1" name="videoFile" accept="video/*" style="display:none;" required>
+                    <button type="button" id="uploadButton" class="upload-btn">
+                        <div>
+                            <i class="fas fa-upload"></i>
+                            <span>Upload Video</span>
+                        </div>
+                    </button>
+                </form>
+            </div>
+            <div id="downloadDiv" class="heading-action hidden">
+                <!-- Download button -->
+                <a id="downloadButton" class="download-btn" href="#" download>
+                    <div>
+                        <i class="fas fa-download"></i>
+                        <span>Download Subtitles</span>
+                    </div>
+                </a>
+                <!-- 2nd Upload button -->
+                <form id="uploadForm2" action="/upload" method="post" enctype="multipart/form-data">
+                    <input type="file" id="videoFile2" name="videoFile" accept="video/*" style="display:none;" required>
+                    <button type="button" id="uploadButton-2" class="upload-2-btn">
+                        <div>
+                            <i class="fas fa-upload"></i>
+                            <span>Upload another</span>
+                        </div>
+                    </button>
+                </form>
+            </div>
+
+            <div id="processing" class="hidden">
+                <div class="loader"></div>
+            </div>
+
+        </div>
+        <div class="right">
+            <!-- Add your static image or video here -->
+            <img src="{{ url_for('static', filename='knit_art.png') }}" alt="Subtitle Generator Image" class="static-image">
+        </div>
+    </div>
+    <script>
+        const videoFileInput1 = document.getElementById('videoFile1');
+        const videoFileInput2 = document.getElementById('videoFile2');
+        const uploadButton = document.getElementById('uploadButton');
+        const uploadButton2 = document.getElementById('uploadButton-2');
+        const uploadForm1 = document.getElementById('uploadForm1');
+        const uploadForm2 = document.getElementById('uploadForm2');
+        const processingDiv = document.getElementById('processing');
+        const downloadDiv = document.getElementById('downloadDiv');
+        const downloadButton = document.getElementById('downloadButton');
+
+        // Trigger file explorer when the upload button is clicked
+        uploadButton.addEventListener('click', function() {
+            videoFileInput1.click();
+        });
+
+        uploadButton2.addEventListener('click', function() {
+            videoFileInput2.click();
+        });
+
+        // Automatically submit form once the file is selected
+        videoFileInput1.addEventListener('change', function() {
+            if (videoFileInput1.files.length > 0) {
+                uploadButton.classList.add('hidden'); // Hide upload button
+                downloadDiv.classList.add('hidden'); // Hide download button
+                processingDiv.classList.remove('hidden'); // Show processing animation
+                
+                // Submit the form via AJAX
+                const formData = new FormData(uploadForm1);
+
+                fetch('/upload', {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "success") {
+                        processingDiv.classList.add('hidden'); // Hide processing animation
+                        downloadDiv.classList.remove('hidden'); // Show download button
+                        downloadButton.href = data.srt_url; // Set the download URL for the button
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    processingDiv.classList.add('hidden'); // Hide processing animation
+                    uploadButton.classList.remove('hidden'); // Show upload button again in case of error
+                });
+            }
+        });
+
+        // Automatically submit form once the file is selected
+        videoFileInput2.addEventListener('change', function() {
+            if (videoFileInput2.files.length > 0) {
+                uploadButton.classList.add('hidden'); // Hide upload button
+                downloadDiv.classList.add('hidden'); // Hide download button
+                processingDiv.classList.remove('hidden'); // Show processing animation
+                
+                // Submit the form via AJAX
+                const formData = new FormData(uploadForm2);
+
+                fetch('/upload', {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "success") {
+                        processingDiv.classList.add('hidden'); // Hide processing animation
+                        downloadDiv.classList.remove('hidden'); // Show download button
+                        downloadButton.href = data.srt_url; // Set the download URL for the button
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    processingDiv.classList.add('hidden'); // Hide processing animation
+                    uploadButton.classList.remove('hidden'); // Show upload button again in case of error
+                });
+            }
+        });
+    </script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyAKiWyPQ5JOr4LgVwLbzCTgLc6ZcGUxHFM",
+          authDomain: "subtitle-generator-abb8f.firebaseapp.com",
+          projectId: "subtitle-generator-abb8f",
+          storageBucket: "subtitle-generator-abb8f.appspot.com",
+          messagingSenderId: "628275722121",
+          appId: "1:628275722121:web:4955b1bce77976d3af1358",
+          measurementId: "G-SSL949J99H"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+      </script>
+</body>
+</html>

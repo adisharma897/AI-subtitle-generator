@@ -1,0 +1,200 @@
+/* General Styles */
+body {
+    background-color: #021416;
+    color: #fff;
+    font-family: Poppins, -apple-system, Roboto, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+input[type="file"] {
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.upload-btn, .download-btn {
+    width: 100%;
+    font-family: Poppins, -apple-system, Roboto, Helvetica, sans-serif;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    appearance: none;
+    padding: 15px 25px;
+    background-color: rgb(255, 248, 220);
+    color: rgb(0, 0, 0);
+    border-radius: 20px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.upload-2-btn {
+    width: 100%;
+    font-size: 10px;
+    font-family: Poppins, -apple-system, Roboto, Helvetica, sans-serif;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    appearance: none;
+    padding: 10px 10px;
+    background-color: rgb(255, 248, 220);
+    color: rgb(0, 0, 0);
+    border-radius: 15px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 600;
+    width: 50%;
+    float: right;
+}
+
+.upload-btn:hover, .download-btn:hover {
+    background-color: rgb(255, 248, 220);
+    color: #6edf0e;
+    
+}
+
+.hidden {
+    display: none;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+    width: 40px;
+    height: 20px;
+    margin: 20px;
+    background: #6edf0e;
+    position: relative;
+    animation: l9-0 1.5s infinite linear;
+  }
+  .loader:before,
+  .loader:after {
+     content:"";
+     position: absolute;
+     background: inherit; 
+     bottom: 100%;
+     width: 50%;
+     height: 100%;
+     animation: inherit;
+     animation-name: l9-1;
+  }
+  .loader:before {
+    left: 0;
+    transform-origin: bottom left;
+    --s:-1;
+  }
+  .loader:after {
+    right: 0;
+    transform-origin: bottom right;
+  }
+  @keyframes l9-0 {
+     0%,10%   {transform:translateY(0%)    scaleY(1)}
+     49.99%   {transform:translateY(-50%)  scaleY(1)}
+     50%      {transform:translateY(-50%)  scaleY(-1)}
+     90%,100% {transform:translateY(-100%) scaleY(-1)}
+  }
+  @keyframes l9-1 {
+     10%,90% {transform: rotate(0deg)}
+     50%     {transform: rotate(calc(var(--s,1)*180deg))}
+  }
+
+/* Container for Two-Part Layout */
+.container {
+    display: flex;
+    padding: 20px;
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+    width: calc(47.4705% - 40.5px);
+    align-items: stretch;
+    line-height: normal;
+    padding: 20px;
+}
+
+.right {
+    display: flex;
+    flex-direction: column;
+    width: calc(52.5295% - 40.5px);
+    margin-left: 81px;
+    align-items: stretch;
+    line-height: normal;
+}
+
+.header {
+    font-style: normal;
+    line-height: 100%;
+    align-self: start;
+    font-family: Poppins, -apple-system, Roboto, Helvetica, sans-serif;
+    font-size: 15px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    appearance: none;
+    padding: 15px 25px;
+    background-color: rgb(255, 248, 220);
+    color: rgb(0, 0, 0);
+    border-radius: 15px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.heading {
+    color: rgb(231 228 228);
+    font-family: Poppins, -apple-system, Roboto, Helvetica, sans-serif;
+    font-size: 60px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 100%;
+    align-self: start;
+
+}
+
+.green-text {
+    color: #6edf0e;
+}
+
+.heading-support {
+    color: rgb(231 228 228);
+    font-family: Poppins, -apple-system, Roboto, Helvetica, sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 177.778%;
+    margin-top: 5px;
+}
+
+.heading-action {
+    width: 50%;
+    margin-top: 28px;
+}
+
+.static-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Mobile Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .left, .right {
+        width: 100%;
+    }
+}
